@@ -22,6 +22,7 @@
 @property (nonatomic, strong) GLLineGraph   *glGraph;
 
 @property (nonatomic, weak) IBOutlet UILabel *cpuNameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *coprocessorLabel;
 @property (nonatomic, weak) IBOutlet UILabel *architectureLabel;
 @property (nonatomic, weak) IBOutlet UILabel *physicalCoresLabel;
 @property (nonatomic, weak) IBOutlet UILabel *logicalCoresLabel;
@@ -50,6 +51,7 @@
     AppDelegate *app = [AppDelegate sharedDelegate];
     
     [self.cpuNameLabel setText:app.iDevice.cpuInfo.cpuName];
+    [self.coprocessorLabel setText:app.iDevice.cpuInfo.coprocessor];
     [self.architectureLabel setText:app.iDevice.cpuInfo.cpuSubtype];
     [self.physicalCoresLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)app.iDevice.cpuInfo.physicalCPUCount]];
     [self.logicalCoresLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)app.iDevice.cpuInfo.logicalCPUCount]];
@@ -76,6 +78,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     AppDelegate *app = [AppDelegate sharedDelegate];
     NSArray *cpuLoadArray = [app.cpuInfoCtrl cpuLoadHistory];
     NSMutableArray *graphData = [NSMutableArray arrayWithCapacity:cpuLoadArray.count];
@@ -104,6 +108,7 @@
 {
     AppDelegate *app = [AppDelegate sharedDelegate];
     app.cpuInfoCtrl.delegate = nil;
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Table view data source
